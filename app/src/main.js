@@ -169,6 +169,24 @@ function clearSearchValues(user) {
     document.getElementById("get" + user + "Height").innerHTML = null;
 }
 
+function clearFormFields(user) {
+    // Clear text inputs
+    document.getElementById(user + 'FullName').value = '';
+    document.getElementById(user + 'Age').value = '';
+    document.getElementById(user + 'MedicalID').value = '';
+    document.getElementById(user + 'BloodType').value = 'A-';
+    document.getElementById(user + 'Weight').value = '';
+    document.getElementById(user + 'Height').value = '';
+    
+    // Clear radio buttons
+    const genderRadios = document.querySelectorAll("input[name='gender']");
+    genderRadios.forEach(radio => radio.checked = false);
+    
+    // Clear checkboxes
+    const organCheckboxes = document.querySelectorAll("input[name='Organ']");
+    organCheckboxes.forEach(checkbox => checkbox.checked = false);
+}
+
 const App = {
     closeAlert: async function() {
         var alert = document.querySelector(".alert.warning");
@@ -209,13 +227,17 @@ const App = {
                 };
 
                 saveRecord(user, record);
+                clearFormFields(user);
                 showWarning(user, "Registration Successful!", "#04AA6D");
                 setTimeout(function() {
                     if (warning) {
                         warning.style.opacity = "0";
-                        setTimeout(function() { warning.style.display = "none"; }, 1200);
+                        setTimeout(function() { 
+                            warning.style.display = "none";
+                            window.location.href = "index.html";
+                        }, 600);
                     }
-                }, 5000);
+                }, 1000);
             } else {
                 showWarning(user, "Medical ID already exists!", "#f44336");
             }
